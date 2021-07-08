@@ -1,7 +1,10 @@
 import './NewExpense.css';
+import React, { useState } from 'react';
 import ExpenseForm from './ExpenseForm';
 
 const NewExpense = (props) => {
+    const [isFormOpen, setIsFormOpen] = useState(false);
+
     const saveExpenseDataHendler = (enteredExpenseData) => {
         const expenseData = {
             ...enteredExpenseData,
@@ -10,9 +13,19 @@ const NewExpense = (props) => {
         props.onAddExpense(expenseData);
     };
 
+    const toggleExpenseButton = () => {
+        setIsFormOpen(true);
+    };
+
+    const openFormBoolean = (openForm) => {
+        setIsFormOpen(openForm);
+    };
+
     return (
     <div className="new-expense">
-       <ExpenseForm onSaveExpenseData={saveExpenseDataHendler} /> 
+        {!isFormOpen && <button onClick={toggleExpenseButton}>Add New Expense</button>}
+        {isFormOpen && <ExpenseForm onSaveExpenseData={saveExpenseDataHendler} onOpenForm={openFormBoolean}/>}
+
     </div>
     );
 };
